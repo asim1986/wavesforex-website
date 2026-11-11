@@ -3,9 +3,9 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://astro-paper.pages.dev/",
-    title: "AstroPaper",
-    description: "A minimal, responsive and SEO-friendly Astro blog theme.",
-    author: "Sat Naing",
+    title: "Waves Forex",
+    description: "our trusted guide to forex brokers and market news.",
+    author: "Asim Malik",
     profile: "https://satna.ing",
     ogImage: "default-og.jpg",
     lang: "en",
