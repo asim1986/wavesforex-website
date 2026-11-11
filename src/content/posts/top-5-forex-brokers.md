@@ -1,5 +1,15 @@
 ---
 title: "Top 5 Forex Brokers for Beginners in 2026 (Ranked & Tested)"
+author: "Waves Forex"
+pubDatetime: 2026-07-13T12:00:00Z
+slug: top-5-forex-brokers
+featured: true
+draft: false
+tags:
+  - forex
+  - brokers
+  - trading
+  - beginners
 description: "Looking to start trading forex in 2026? We test and rank the top 5 beginner-friendly brokers with low minimum deposits, tight spreads, and high security."
 ---
 
