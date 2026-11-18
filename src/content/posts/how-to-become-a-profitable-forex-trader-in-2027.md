@@ -58,7 +58,7 @@ For example, EUR/USD represents the euro against the US dollar.
 
 If EUR/USD moves from 1.0800 to 1.0850, the euro has appreciated relative to the dollar over that period.
 
-Forex currency pairs are commonly divided into 3 categories:
+Forex currency pairs are divided into 3 categories:
 
 | Category | Examples |
 |---|---|
