@@ -1,0 +1,44 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+---
+
+<Layout
+  title={`Contact | ${config.site.title}`}
+  description="Get in touch with Waves Forex about website feedback, corrections, or editorial enquiries."
+>
+  <Header />
+  <Breadcrumb />
+  <Main
+    pageTitle="Contact Waves Forex"
+    pageDesc="Questions, feedback, or corrections? We'd like to hear from you."
+    class="app-prose"
+  >
+    <section class="not-prose rounded-xl border border-border p-5 sm:p-6">
+      <h2 class="mt-0 text-xl font-semibold">Get in touch</h2>
+      <p class="mt-2">
+        For feedback about the website, suggestions for educational topics, or
+        corrections to published content, please contact us through our GitHub
+        profile.
+      </p>
+      <a
+        href="https://github.com/asim1986"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 inline-flex rounded-lg bg-skin-accent px-4 py-2 font-medium text-skin-inverted transition hover:opacity-90"
+      >
+        Contact Waves Forex on GitHub
+      </a>
+    </section>
+
+    <p class="mt-6">
+      When reporting an issue with an article or calculator, please include the
+      page URL and a short description so we can review it.
+    </p>
+  </Main>
+  <Footer />
+</Layout>
