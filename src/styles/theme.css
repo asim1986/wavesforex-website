@@ -2,6 +2,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-muted: var(--muted);
