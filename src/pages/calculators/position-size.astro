@@ -4,7 +4,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 
 const title = "Forex Position Size Calculator | WavesForex";
-const description = "Calculate an illustrative forex position size using account balance, risk percentage, entry price, stop-loss price and pip value.";
+const description = "Calculate an illustrative forex position size using a selected currency pair, account balance, risk percentage, entry price and stop-loss.";
 ---
 
 <Layout title={title} description={description}>
@@ -20,7 +20,7 @@ const description = "Calculate an illustrative forex position size using account
     <section class="calculator-intro">
       <p class="eyebrow">WavesForex trading tools</p>
       <h1>Forex Position Size Calculator</h1>
-      <p>Understand how much currency exposure corresponds to a chosen account risk and stop-loss distance. Set your inputs below to calculate an illustrative position size.</p>
+      <p>Choose your market, enter your trade details and estimate a position size based on your account risk and stop-loss distance.</p>
     </section>
 
     <section class="calculator-shell" aria-labelledby="calculator-heading">
@@ -30,11 +30,37 @@ const description = "Calculate an illustrative forex position size using account
             <p class="eyebrow">Your trade details</p>
             <h2 id="calculator-heading">Enter your values</h2>
           </div>
-          <span class="tool-label">Forex</span>
+          <span class="tool-label">Forex &amp; Gold</span>
         </div>
 
         <form id="position-form">
           <div class="field-grid">
+            <label class="field">
+              <span>Currency pair / instrument</span>
+              <select id="instrument">
+                <optgroup label="Major forex pairs">
+                  <option value="EURUSD" selected>EUR/USD</option>
+                  <option value="GBPUSD">GBP/USD</option>
+                  <option value="AUDUSD">AUD/USD</option>
+                  <option value="NZDUSD">NZD/USD</option>
+                  <option value="USDJPY">USD/JPY</option>
+                  <option value="USDCHF">USD/CHF</option>
+                  <option value="USDCAD">USD/CAD</option>
+                </optgroup>
+                <optgroup label="Popular cross pairs">
+                  <option value="EURJPY">EUR/JPY</option>
+                  <option value="GBPJPY">GBP/JPY</option>
+                  <option value="EURGBP">EUR/GBP</option>
+                  <option value="EURAUD">EUR/AUD</option>
+                  <option value="GBPAUD">GBP/AUD</option>
+                </optgroup>
+                <optgroup label="Metals">
+                  <option value="XAUUSD">XAU/USD (Gold)</option>
+                  <option value="XAGUSD">XAG/USD (Silver)</option>
+                </optgroup>
+                <option value="CUSTOM">Other / custom instrument</option>
+              </select>
+            </label>
             <label class="field">
               <span>Account balance (USD)</span>
               <input id="balance" type="number" min="0.01" step="any" value="10000" required />
@@ -52,10 +78,10 @@ const description = "Calculate an illustrative forex position size using account
               <input id="stop" type="number" min="0.00000001" step="any" value="1.08200" required />
             </label>
             <label class="field">
-              <span>Pip size</span>
+              <span>Pip / price step</span>
               <select id="pip-size">
-                <option value="0.0001" selected>0.0001 — most major pairs</option>
-                <option value="0.01">0.01 — JPY pairs</option>
+                <option value="0.0001" selected>0.0001 — standard forex pip</option>
+                <option value="0.01">0.01 — JPY / metals (check broker)</option>
                 <option value="0.1">0.1 — custom instrument</option>
                 <option value="1">1.0 — custom instrument</option>
               </select>
@@ -63,7 +89,7 @@ const description = "Calculate an illustrative forex position size using account
             <label class="field">
               <span>Pip value per standard lot (USD)</span>
               <input id="pip-value" type="number" min="0.000001" step="any" value="10" required />
-              <small>Enter the pip value for one standard lot in your account currency.</small>
+              <small id="pip-value-help">Preset estimate for EUR/USD. Confirm the exact value with your broker.</small>
             </label>
           </div>
           <button class="calculate-button" type="submit">Calculate position size <span aria-hidden="true">→</span></button>
@@ -101,9 +127,9 @@ const description = "Calculate an illustrative forex position size using account
       </article>
       <article class="info-card">
         <p class="eyebrow">Important to understand</p>
-        <h2>Pip value is not universal</h2>
-        <p>Pip value depends on the currency pair, position size and account currency. The default $10 value is a common approximation for one standard lot of many USD-quoted major pairs, not a universal value.</p>
-        <p>For JPY pairs, cross-currency pairs, metals, indices and other CFDs, check your broker's contract specifications or a suitable pip-value calculator and enter the correct value.</p>
+        <h2>Check the instrument's contract size</h2>
+        <p>Pip value varies with the instrument, lot contract, market price and account currency. The selector fills in an illustrative starting value; it is not a live broker quote.</p>
+        <p>Gold and silver contract specifications differ between brokers. Always confirm the tick size, contract size and tick value in your broker's symbol specifications, then edit the pip size and pip value fields if needed. Cross-pair and JPY pip values can also change with exchange rates.</p>
       </article>
     </section>
 
@@ -163,6 +189,36 @@ const description = "Calculate an illustrative forex position size using account
 <script>
   const form = document.querySelector<HTMLFormElement>("#position-form");
   const error = document.querySelector<HTMLElement>("#form-error");
+  const instrument = document.querySelector<HTMLSelectElement>("#instrument");
+  const pipSizeField = document.querySelector<HTMLSelectElement>("#pip-size");
+  const pipValueField = document.querySelector<HTMLInputElement>("#pip-value");
+  const pipValueHelp = document.querySelector<HTMLElement>("#pip-value-help");
+
+  const presets: Record<string, { pipSize: string; pipValue: string; help: string }> = {
+    EURUSD: { pipSize: "0.0001", pipValue: "10", help: "Approx. $10 per pip per standard lot for EUR/USD in a USD account." },
+    GBPUSD: { pipSize: "0.0001", pipValue: "10", help: "Approx. $10 per pip per standard lot for GBP/USD in a USD account." },
+    AUDUSD: { pipSize: "0.0001", pipValue: "10", help: "Approx. $10 per pip per standard lot for AUD/USD in a USD account." },
+    NZDUSD: { pipSize: "0.0001", pipValue: "10", help: "Approx. $10 per pip per standard lot for NZD/USD in a USD account." },
+    USDJPY: { pipSize: "0.01", pipValue: "6.67", help: "Illustrative $6.67 estimate; USD/JPY pip value changes with the exchange rate." },
+    USDCHF: { pipSize: "0.0001", pipValue: "11.20", help: "Illustrative estimate only; USD/CHF pip value changes with the exchange rate." },
+    USDCAD: { pipSize: "0.0001", pipValue: "7.40", help: "Illustrative estimate only; USD/CAD pip value changes with the exchange rate." },
+    EURJPY: { pipSize: "0.01", pipValue: "6.67", help: "Illustrative estimate only; cross-pair pip value changes with exchange rates." },
+    GBPJPY: { pipSize: "0.01", pipValue: "6.67", help: "Illustrative estimate only; cross-pair pip value changes with exchange rates." },
+    EURGBP: { pipSize: "0.0001", pipValue: "12.50", help: "Illustrative estimate only; EUR/GBP pip value changes with exchange rates." },
+    EURAUD: { pipSize: "0.0001", pipValue: "6.50", help: "Illustrative estimate only; EUR/AUD pip value changes with exchange rates." },
+    GBPAUD: { pipSize: "0.0001", pipValue: "6.50", help: "Illustrative estimate only; GBP/AUD pip value changes with exchange rates." },
+    XAUUSD: { pipSize: "0.01", pipValue: "1", help: "Illustrative only: assumes a 100 oz gold contract, where a $0.01 move is about $1 per lot. Broker specs vary." },
+    XAGUSD: { pipSize: "0.01", pipValue: "50", help: "Illustrative only: assumes a 5,000 oz silver contract. Broker contract sizes vary substantially." },
+    CUSTOM: { pipSize: "0.0001", pipValue: "10", help: "Enter the pip size and pip value from your broker's instrument specifications." }
+  };
+
+  instrument?.addEventListener("change", () => {
+    const preset = presets[instrument.value];
+    if (!preset || !pipSizeField || !pipValueField) return;
+    pipSizeField.value = preset.pipSize;
+    pipValueField.value = preset.pipValue;
+    if (pipValueHelp) pipValueHelp.textContent = preset.help;
+  });
 
   const readNumber = (id: string) => Number((document.getElementById(id) as HTMLInputElement).value);
   const money = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(value);
