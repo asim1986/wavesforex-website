@@ -191,6 +191,7 @@ const description = "Calculate the value of a forex pip in your trading account 
         if(conversionData.date > latestDate) latestDate = conversionData.date;
       } catch {
         if(requestId !== rateRequest)return;
+        conversionField.value = '';
         conversionWrap.hidden = false;
       }
     } else {
@@ -203,6 +204,7 @@ const description = "Calculate the value of a forex pip in your trading account 
       else if(pairIsFx) rateStatus.textContent = 'Could not fetch a reference rate. The editable rate above is being used.';
       else rateStatus.textContent = 'Enter the current price from your broker. Currency conversion is fetched separately when available.';
     }
+    form?.requestSubmit();
   };
   pair?.addEventListener('change',()=>{
     const p=presets[pair.value];if(!p)return;
