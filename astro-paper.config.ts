@@ -3,8 +3,8 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://wavesforex.com/",
-    title: "Waves Forex",
-    description: "our trusted guide to forex brokers and market news.",
+    title: "WavesForex",
+    description: "Independent Forex education, financial market insights, gold and currency guides, and practical trading resources.",
     author: "Asim Malik",
     profile: "https://satna.ing",
     ogImage: "default-og.jpg",
