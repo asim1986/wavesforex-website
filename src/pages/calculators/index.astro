@@ -199,7 +199,7 @@ import Footer from "@/components/Footer.astro";
       case "lots": showResult(unitsToLots(v.units, v.unitsPerLot), "Lot equivalent. Contract size varies by instrument and broker.", " lots"); break;
       case "margin": showResult(requiredMargin(v.notional, v.leverage), "Estimated required margin in account currency. Actual broker requirements may differ."); break;
       case "leverage": showResult(effectiveLeverage(v.notional, v.equity), "Exposure divided by account equity.", "x"); break;
-      case "rr": showResult(rewardToRiskRatio(v.rewardDistance, v.riskDistance), "Potential reward distance divided by risk distance.", ":1"); break;
+      case "rr": showResult(rewardToRiskRatio(v.rewardDistance, v.riskDistance), "Potential reward distance divided by risk distance; expressed as a reward-to-risk multiple.", "x"); break;
       case "risk": showResult(riskPercentage(v.loss, v.balance), "Potential loss as a percentage of the entered balance.", "%"); break;
       case "stop": showResult(priceDistanceToPips(Math.abs(v.entry - v.stop), v.pipSize), "Absolute entry-to-stop distance, expressed in pips.", " pips"); break;
       case "target": {
