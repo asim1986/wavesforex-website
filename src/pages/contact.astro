@@ -9,7 +9,7 @@ import config from "@/config";
 
 <Layout
   title={`Contact | ${config.site.title}`}
-  description="Get in touch with Waves Forex about website feedback, corrections, or editorial enquiries."
+  description="Contact Waves Forex with questions, website feedback, corrections, or business enquiries."
 >
   <Header />
   <Breadcrumb />
@@ -19,25 +19,119 @@ import config from "@/config";
     class="app-prose"
   >
     <section class="not-prose rounded-xl border border-border p-5 sm:p-6">
-      <h2 class="mt-0 text-xl font-semibold">Get in touch</h2>
-      <p class="mt-2">
-        For feedback about the website, suggestions for educational topics, or
-        corrections to published content, please email us at
+      <h2 class="mt-0 text-xl font-semibold">Send us a message</h2>
+      <p class="mt-2 text-sm text-skin-base">
+        Use the form below to contact the Waves Forex team. We welcome website
+        feedback, article corrections, educational topic suggestions, and
+        business enquiries.
       </p>
-      <a
-        href="mailto:realwavesfx@gmail.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mt-4 inline-flex rounded-lg bg-skin-accent px-4 py-2 font-medium text-skin-inverted transition hover:opacity-90"
+
+      <form
+        action="https://formsubmit.co/realwavesfx@gmail.com"
+        method="POST"
+        class="mt-6 space-y-4"
       >
-        realwavesfx@gmail.com
-      </a>
+        <input type="hidden" name="_subject" value="New message from WavesForex.com" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_next" value="https://wavesforex.com/contact/?submitted=true" />
+
+        <!-- Honeypot field: leave empty; helps filter automated spam. -->
+        <div class="hidden" aria-hidden="true">
+          <label for="contact-company">Leave this field empty</label>
+          <input
+            id="contact-company"
+            type="text"
+            name="_honey"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+
+        <div>
+          <label for="contact-name" class="mb-1 block text-sm font-medium">Your name</label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            required
+            maxlength="100"
+            autocomplete="name"
+            placeholder="Enter your name"
+            class="w-full rounded-lg border border-border bg-transparent px-3 py-2 text-base text-skin-base outline-none focus:border-skin-accent"
+          />
+        </div>
+
+        <div>
+          <label for="contact-email" class="mb-1 block text-sm font-medium">Email address</label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            required
+            maxlength="254"
+            autocomplete="email"
+            placeholder="you@example.com"
+            class="w-full rounded-lg border border-border bg-transparent px-3 py-2 text-base text-skin-base outline-none focus:border-skin-accent"
+          />
+        </div>
+
+        <div>
+          <label for="contact-subject" class="mb-1 block text-sm font-medium">Subject</label>
+          <select
+            id="contact-subject"
+            name="subject"
+            required
+            class="w-full rounded-lg border border-border bg-transparent px-3 py-2 text-base text-skin-base outline-none focus:border-skin-accent"
+          >
+            <option value="General enquiry">General enquiry</option>
+            <option value="Website feedback">Website feedback</option>
+            <option value="Article correction">Article correction</option>
+            <option value="Educational topic suggestion">Educational topic suggestion</option>
+            <option value="Business enquiry">Business enquiry</option>
+            <option value="Technical issue">Technical issue</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="contact-message" class="mb-1 block text-sm font-medium">Your message</label>
+          <textarea
+            id="contact-message"
+            name="message"
+            required
+            minlength="10"
+            maxlength="5000"
+            rows="6"
+            placeholder="Write your message here..."
+            class="w-full resize-y rounded-lg border border-border bg-transparent px-3 py-2 text-base text-skin-base outline-none focus:border-skin-accent"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="inline-flex rounded-lg bg-skin-accent px-5 py-2.5 font-medium text-skin-inverted transition hover:opacity-90"
+        >
+          Send message
+        </button>
+      </form>
     </section>
 
-    <p class="mt-6">
+    <p class="mt-6 text-sm">
       When reporting an issue with an article or calculator, please include the
-      page URL and a short description so we can review it.
+      page URL and a short description so we can review it. Please do not include
+      passwords, payment details, or other sensitive information.
     </p>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("submitted") === "true") {
+        const notice = document.createElement("p");
+        notice.className = "mb-5 rounded-lg border border-border p-4 text-sm";
+        notice.setAttribute("role", "status");
+        notice.textContent = "Thank you. Your message has been submitted.";
+        document.querySelector("main")?.prepend(notice);
+        window.history.replaceState({}, "", window.location.pathname);
+      }
+    </script>
   </Main>
   <Footer />
 </Layout>
