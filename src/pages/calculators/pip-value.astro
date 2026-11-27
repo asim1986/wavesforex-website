@@ -1,0 +1,182 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+
+const title = "Forex Pip Value Calculator | WavesForex";
+const description = "Calculate the value of a forex pip in your trading account currency. Choose a currency pair, exchange rate, position size and account currency.";
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  <main id="main-content" class="app-layout calculator-page">
+    <nav aria-label="Breadcrumb" class="breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/calculators/">Calculators</a><span>/ Pip Value</span>
+    </nav>
+
+    <section class="intro">
+      <p class="eyebrow">WavesForex trading tools</p>
+      <h1>Forex Pip Value Calculator</h1>
+      <p>Find out how much each pip is worth for your trade, in the currency of your trading account.</p>
+    </section>
+
+    <section class="calculator" aria-label="Pip value calculator">
+      <div class="form-panel">
+        <p class="eyebrow">Trade details</p>
+        <h2>Enter your trade information</h2>
+        <form id="pip-form">
+          <label class="field">
+            <span>Currency pair / instrument</span>
+            <select id="pair">
+              <optgroup label="Major currency pairs">
+                <option value="EURUSD" selected>EUR/USD</option><option value="GBPUSD">GBP/USD</option>
+                <option value="AUDUSD">AUD/USD</option><option value="NZDUSD">NZD/USD</option>
+                <option value="USDJPY">USD/JPY</option><option value="USDCHF">USD/CHF</option><option value="USDCAD">USD/CAD</option>
+              </optgroup>
+              <optgroup label="Popular cross pairs">
+                <option value="EURGBP">EUR/GBP</option><option value="EURJPY">EUR/JPY</option>
+                <option value="GBPJPY">GBP/JPY</option><option value="EURAUD">EUR/AUD</option>
+                <option value="GBPAUD">GBP/AUD</option><option value="EURCHF">EUR/CHF</option>
+                <option value="GBPCHF">GBP/CHF</option><option value="AUDJPY">AUD/JPY</option>
+              </optgroup>
+              <optgroup label="Metals">
+                <option value="XAUUSD">XAU/USD — Gold</option><option value="XAGUSD">XAG/USD — Silver</option>
+              </optgroup>
+              <option value="CUSTOM">Custom instrument</option>
+            </select>
+          </label>
+
+          <div class="two-cols">
+            <label class="field"><span>Exchange rate / price</span><input id="rate" type="number" min="0.00000001" step="any" value="1.08500" required /><small>Enter the current rate shown by your broker.</small></label>
+            <label class="field"><span>Position size (units)</span><input id="units" type="number" min="0.000001" step="any" value="100000" required /><small>100,000 units = 1 standard forex lot.</small></label>
+          </div>
+
+          <div class="two-cols">
+            <label class="field"><span>Account currency</span>
+              <select id="account">
+                <option value="USD" selected>USD — US Dollar</option><option value="EUR">EUR — Euro</option>
+                <option value="GBP">GBP — British Pound</option><option value="INR">INR — Indian Rupee</option>
+                <option value="JPY">JPY — Japanese Yen</option><option value="AUD">AUD — Australian Dollar</option>
+                <option value="CAD">CAD — Canadian Dollar</option><option value="CHF">CHF — Swiss Franc</option>
+                <option value="NZD">NZD — New Zealand Dollar</option>
+              </select>
+            </label>
+            <label class="field"><span>Pip size</span>
+              <select id="pip-size"><option value="0.0001" selected>0.0001 — most forex pairs</option><option value="0.01">0.01 — JPY pairs / metals (check broker)</option><option value="0.1">0.1 — custom</option><option value="1">1.0 — custom</option></select>
+              <small>For gold and silver, use your broker's definition of a pip or price step.</small>
+            </label>
+          </div>
+
+          <div id="conversion-wrap" class="field conversion-field" hidden>
+            <span>Quote currency to account currency conversion rate</span>
+            <input id="conversion" type="number" min="0.00000001" step="any" value="1" />
+            <small id="conversion-help">Enter how many units of your account currency equal 1 unit of the pair's quote currency. For example, if quote currency is USD and account currency is INR, enter the USD/INR rate.</small>
+          </div>
+
+          <button type="submit" class="calculate-button">Calculate pip value <span aria-hidden="true">→</span></button>
+          <p id="error" class="error" role="alert" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <aside class="result-panel" aria-live="polite">
+        <p class="eyebrow">Your result</p>
+        <h2>Value per pip</h2>
+        <p class="result-caption">For the position size entered</p>
+        <div class="result-number"><span id="result">10.00</span><span id="result-currency">USD</span></div>
+        <div class="result-details">
+          <div><span>Pair</span><strong id="result-pair">EUR/USD</strong></div>
+          <div><span>Position size</span><strong id="result-units">100,000 units</strong></div>
+          <div><span>Pip size</span><strong id="result-pip">0.0001</strong></div>
+          <div><span>Value in quote currency</span><strong id="quote-value">10.00 USD</strong></div>
+        </div>
+        <p class="result-note">This is an estimate based on the values you enter. It is not a live quote and excludes fees and execution effects.</p>
+      </aside>
+    </section>
+
+    <section class="explain">
+      <article>
+        <p class="eyebrow">The formula</p><h2>How pip value is calculated</h2>
+        <p>For a standard forex pair, the pip value in the quote currency is the position size multiplied by the pip size. The result is then converted into your account currency when needed.</p>
+        <div class="formula">Pip value = Position size × Pip size × Conversion rate</div>
+        <p>For example, 100,000 EUR/USD units with a 0.0001 pip size gives a pip value of 10 USD per pip when the account currency is USD.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Important</p><h2>Use the correct broker specifications</h2>
+        <p>Forex pip conventions are generally 0.0001 for most pairs and 0.01 for JPY pairs. Gold, silver, indices and CFDs may use different contract sizes and tick conventions. Set position size in the instrument's actual units and confirm the pip or tick definition with your broker.</p>
+        <p>When the quote currency cannot be converted automatically from the selected pair, enter the quote-to-account conversion rate. The calculator does not fetch live exchange rates.</p>
+      </article>
+    </section>
+    <p class="disclaimer">Educational use only. This tool provides an estimate, not financial advice or a trading recommendation. Actual pip or tick values may differ due to broker contract specifications, currency conversion, fees and market conditions.</p>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .calculator-page{padding-top:2rem;padding-bottom:4rem}.breadcrumb{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:2rem;color:var(--muted-foreground);font-size:.82rem}.breadcrumb a:hover{color:var(--accent)}
+  .intro{max-width:760px;margin:0 auto 2rem;text-align:center}.eyebrow{color:var(--accent);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.intro h1{margin:.55rem 0 .8rem;font-size:clamp(2rem,5vw,3.25rem);line-height:1.1;font-weight:800;letter-spacing:-.045em}.intro>p:last-child{color:var(--foreground-soft);font-size:1.05rem;line-height:1.7}
+  .calculator{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.8fr);overflow:hidden;border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--shadow-soft)}.form-panel{padding:clamp(1.2rem,3vw,2rem)}.form-panel h2,.result-panel h2,.explain h2{margin:.25rem 0 1.3rem;font-size:1.35rem;font-weight:750;letter-spacing:-.025em}.field{display:flex;flex-direction:column;gap:.45rem;margin-top:1rem;color:var(--foreground);font-size:.88rem;font-weight:650}.field input,.field select{width:100%;min-height:46px;border:1px solid var(--border);border-radius:9px;background:var(--background);color:var(--foreground);padding:.65rem .75rem;font:inherit;font-weight:450}.field input:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:2px}.field small{color:var(--muted-foreground);font-size:.73rem;font-weight:400;line-height:1.45}.two-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.conversion-field{padding:1rem;border:1px solid var(--border);border-radius:10px;background:var(--surface-soft)}.conversion-field[hidden]{display:none}
+  .calculate-button{display:flex;width:100%;justify-content:center;gap:.6rem;margin-top:1.5rem;border:0;border-radius:10px;background:var(--accent);color:white;padding:.9rem 1rem;font:inherit;font-weight:750;cursor:pointer}.calculate-button:hover{filter:brightness(1.08)}.error{min-height:1.3rem;margin-top:.6rem;color:#dc4545;font-size:.83rem}
+  .result-panel{display:flex;flex-direction:column;justify-content:center;padding:clamp(1.4rem,3vw,2rem);background:var(--surface-soft);border-inline-start:1px solid var(--border)}.result-panel h2{margin-bottom:.2rem;font-size:1.5rem}.result-caption{color:var(--muted-foreground);font-size:.82rem}.result-number{display:flex;align-items:baseline;gap:.55rem;margin:1.2rem 0 1.5rem;color:var(--accent)}.result-number span:first-child{font-size:clamp(2.5rem,5vw,3.8rem);font-weight:850;line-height:1;letter-spacing:-.06em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.result-number span:last-child{font-weight:750}.result-details{border-top:1px solid var(--border)}.result-details div{display:flex;justify-content:space-between;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--border);font-size:.84rem}.result-details div span{color:var(--muted-foreground)}.result-details strong{text-align:right;font-variant-numeric:tabular-nums}.result-note{margin-top:1rem;color:var(--muted-foreground);font-size:.75rem;line-height:1.6}
+  .explain{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1.5rem}.explain article{padding:1.4rem;border:1px solid var(--border);border-radius:16px;background:var(--surface)}.explain h2{margin-bottom:.6rem}.explain article p:not(.eyebrow){margin-top:.7rem;color:var(--foreground-soft);font-size:.88rem;line-height:1.75}.formula{margin-top:1rem;border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;background:var(--surface-soft);padding:.9rem 1rem;font-size:.9rem;font-weight:750}.disclaimer{margin-top:1.5rem;color:var(--muted-foreground);font-size:.76rem;line-height:1.65}
+  @media(max-width:760px){.calculator{grid-template-columns:1fr}.result-panel{border-inline-start:0;border-top:1px solid var(--border)}}@media(max-width:520px){.two-cols,.explain{grid-template-columns:1fr}}
+</style>
+
+<script>
+  const pair = document.querySelector<HTMLSelectElement>("#pair");
+  const rateField = document.querySelector<HTMLInputElement>("#rate");
+  const unitsField = document.querySelector<HTMLInputElement>("#units");
+  const pipField = document.querySelector<HTMLSelectElement>("#pip-size");
+  const accountField = document.querySelector<HTMLSelectElement>("#account");
+  const conversionWrap = document.querySelector<HTMLElement>("#conversion-wrap");
+  const conversionField = document.querySelector<HTMLInputElement>("#conversion");
+  const conversionHelp = document.querySelector<HTMLElement>("#conversion-help");
+  const form = document.querySelector<HTMLFormElement>("#pip-form");
+  const error = document.querySelector<HTMLElement>("#error");
+  const presets: Record<string,{base:string;quote:string;rate:string;units:string;pip:string}> = {
+    EURUSD:{base:"EUR",quote:"USD",rate:"1.08500",units:"100000",pip:"0.0001"},GBPUSD:{base:"GBP",quote:"USD",rate:"1.27000",units:"100000",pip:"0.0001"},
+    AUDUSD:{base:"AUD",quote:"USD",rate:"0.65000",units:"100000",pip:"0.0001"},NZDUSD:{base:"NZD",quote:"USD",rate:"0.61000",units:"100000",pip:"0.0001"},
+    USDJPY:{base:"USD",quote:"JPY",rate:"150.000",units:"100000",pip:"0.01"},USDCHF:{base:"USD",quote:"CHF",rate:"0.88000",units:"100000",pip:"0.0001"},
+    USDCAD:{base:"USD",quote:"CAD",rate:"1.35000",units:"100000",pip:"0.0001"},EURGBP:{base:"EUR",quote:"GBP",rate:"0.85000",units:"100000",pip:"0.0001"},
+    EURJPY:{base:"EUR",quote:"JPY",rate:"162.000",units:"100000",pip:"0.01"},GBPJPY:{base:"GBP",quote:"JPY",rate:"190.000",units:"100000",pip:"0.01"},
+    EURAUD:{base:"EUR",quote:"AUD",rate:"1.65000",units:"100000",pip:"0.0001"},GBPAUD:{base:"GBP",quote:"AUD",rate:"1.95000",units:"100000",pip:"0.0001"},
+    EURCHF:{base:"EUR",quote:"CHF",rate:"0.96000",units:"100000",pip:"0.0001"},GBPCHF:{base:"GBP",quote:"CHF",rate:"1.12000",units:"100000",pip:"0.0001"},
+    AUDJPY:{base:"AUD",quote:"JPY",rate:"97.500",units:"100000",pip:"0.01"},
+    XAUUSD:{base:"XAU",quote:"USD",rate:"2350.00",units:"100",pip:"0.01"},XAGUSD:{base:"XAG",quote:"USD",rate:"28.00",units:"5000",pip:"0.01"},
+    CUSTOM:{base:"BASE",quote:"QUOTE",rate:"1.0000",units:"100000",pip:"0.0001"}
+  };
+  const fmt = (n:number,d=2) => new Intl.NumberFormat("en-US",{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);
+  const refreshConversion = () => {
+    if(!pair||!accountField||!conversionWrap||!conversionField)return;
+    const p=presets[pair.value]; const account=accountField.value;
+    const needsManual=p.quote!==account && p.base!==account;
+    conversionWrap.hidden=!needsManual;
+    if(p.quote===account){conversionField.value="1";}
+    else if(p.base===account){const rate=Number(rateField?.value);conversionField.value=rate>0?(1/rate).toPrecision(8):"";}
+    if(needsManual && conversionHelp) conversionHelp.textContent=`Enter how many ${account} units equal 1 ${p.quote}. Example: for a USD-quoted pair and an INR account, enter the USD/INR exchange rate.`;
+  };
+  pair?.addEventListener("change",()=>{
+    const p=presets[pair.value];if(!p)return;
+    if(rateField)rateField.value=p.rate;if(unitsField)unitsField.value=p.units;if(pipField)pipField.value=p.pip;
+    refreshConversion();
+  });
+  accountField?.addEventListener("change",refreshConversion);
+  rateField?.addEventListener("input",refreshConversion);
+  refreshConversion();
+
+  form?.addEventListener("submit",event=>{
+    event.preventDefault();if(error)error.textContent="";
+    const p=presets[pair?.value??"EURUSD"];const rate=Number(rateField?.value);const units=Number(unitsField?.value);const pip=Number(pipField?.value);
+    if(!p||![rate,units,pip].every(v=>Number.isFinite(v)&&v>0)){if(error)error.textContent="Enter valid positive values for the exchange rate, position size and pip size.";return;}
+    let conversion=1;
+    if(p.quote===accountField?.value) conversion=1;
+    else if(p.base===accountField?.value) conversion=1/rate;
+    else conversion=Number(conversionField?.value);
+    if(!Number.isFinite(conversion)||conversion<=0){if(error)error.textContent="Enter a valid quote-to-account currency conversion rate.";return;}
+    const quoteValue=units*pip;const value=quoteValue*conversion;const currency=accountField?.value??"USD";
+    const out=document.querySelector<HTMLElement>("#result");if(out)out.textContent=fmt(value,2);
+    const cur=document.querySelector<HTMLElement>("#result-currency");if(cur)cur.textContent=currency;
+    const set=(id:string,value:string)=>{const el=document.getElementById(id);if(el)el.textContent=value;};
+    set("result-pair",pair?.selectedOptions[0]?.text??"");set("result-units",new Intl.NumberFormat("en-US",{maximumFractionDigits:2}).format(units)+" units");
+    set("result-pip",String(pip));set("quote-value",fmt(quoteValue,2)+" "+p.quote);
+  });
+</script>
