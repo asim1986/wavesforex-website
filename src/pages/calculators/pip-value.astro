@@ -187,7 +187,7 @@ const description = "Calculate the value of a forex pip in your trading account 
         const conversionData = await fetchReferenceRate(p.quote,account);
         if(requestId !== rateRequest)return;
         conversionField.value = String(conversionData.rate);
-        conversionWrap.hidden = true;
+        conversionWrap.hidden = false;
         if(conversionData.date > latestDate) latestDate = conversionData.date;
       } catch {
         if(requestId !== rateRequest)return;
@@ -197,7 +197,7 @@ const description = "Calculate the value of a forex pip in your trading account 
       conversionWrap.hidden = false;
     }
     if(requestId !== rateRequest)return;
-    if(conversionHelp) conversionHelp.textContent = 'Enter how many ' + account + ' units equal 1 ' + p.quote + '. The automatic reference conversion is used when available; you can enter a broker-specific rate here if needed.';
+    if(conversionHelp) conversionHelp.textContent = 'Enter how many ' + account + ' units equal 1 ' + p.quote + '. This field is auto-filled with the latest reference rate. You can override it with your own conversion rate.';
     if(rateStatus) {
       if(pairIsFx && pairRateAvailable) rateStatus.textContent = 'Reference rate date: ' + latestDate + '. Not an intraday trading quote.';
       else if(pairIsFx) rateStatus.textContent = 'Could not fetch a reference rate. The editable rate above is being used.';
