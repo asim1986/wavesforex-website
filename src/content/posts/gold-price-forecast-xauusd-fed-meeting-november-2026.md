@@ -14,7 +14,7 @@ tags:
 description: "Gold rebounded above $3,640 after a sharp correction. Explore the US dollar, Fed rate expectations and key XAU/USD support and resistance levels."
 ---
 
-![Stacked gold bullion bars – featured image for the XAU/USD gold price analysis](https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1600&q=80)
+<img src="https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&fm=jpg&w=1600&q=80" alt="Stacked gold bullion bars for the XAU/USD gold price analysis" width="1600" height="900" loading="eager" decoding="async" style="display:block;width:100%;height:auto;max-width:100%;border-radius:12px;" />
 
 *Featured image: [Jingming Pan on Unsplash](https://unsplash.com/photos/stacked-gold-bullion-bars-iYsrkq5qq0Q) · [Unsplash License](https://unsplash.com/license).*
 
@@ -24,7 +24,7 @@ Gold prices staged a notable recovery in US trading on Friday, climbing back int
 
 Several macroeconomic and institutional headwinds in the United States continue to weigh on gold’s upside potential:
 
-![United States Department of the Treasury building in Washington, DC](https://images.unsplash.com/photo-1793857253320-1e771ed11cbe?auto=format&fit=crop&w=1400&q=80)
+<img src="https://images.unsplash.com/photo-1793857253320-1e771ed11cbe?auto=format&fit=crop&fm=jpg&w=1400&q=80" alt="United States Department of the Treasury building in Washington, DC" width="1400" height="900" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;max-width:100%;border-radius:12px;" />
 
 *Photo: [Karolina Bobek on Unsplash](https://unsplash.com/photos/treasury-building-in-washington-dc-2Xndqkf2BMI) · [Unsplash License](https://unsplash.com/license).*
 
