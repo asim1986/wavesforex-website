@@ -14,11 +14,20 @@ tags:
 description: "Gold rebounded above $3,640 after a sharp correction. Explore the US dollar, Fed rate expectations and key XAU/USD support and resistance levels."
 ---
 
+![Stacked gold bullion bars – featured image for the XAU/USD gold price analysis](https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1600&q=80)
+
+*Featured image: [Jingming Pan on Unsplash](https://unsplash.com/photos/stacked-gold-bullion-bars-iYsrkq5qq0Q) · [Unsplash License](https://unsplash.com/license).*
+
 Gold prices staged a notable recovery in US trading on Friday, climbing back into the **$3,640–$3,670 per ounce** range after dipping below $3,500 earlier in the week. While the bounce has offered relief to bullion investors following a steep 35% correction from January's record highs near $5,608/oz, Wall Street analysts largely view the move as a short-term technical rebound rather than the start of a sustained bull run.
 
 ## Why Sustaining the Rally Faces Steep Hurdles
 
 Several macroeconomic and institutional headwinds in the United States continue to weigh on gold’s upside potential:
+
+![United States Department of the Treasury building in Washington, DC](https://images.unsplash.com/photo-1793857253320-1e771ed11cbe?auto=format&fit=crop&w=1400&q=80)
+
+*Photo: [Karolina Bobek on Unsplash](https://unsplash.com/photos/treasury-building-in-washington-dc-2Xndqkf2BMI) · [Unsplash License](https://unsplash.com/license).*
+
 
 - **Hawkish Federal Reserve Expectations:** Upwardly revised Q3 US GDP growth (4.3%) and persistent Core PCE inflation (3.3% year-over-year) have pushed CME FedWatch probabilities to over 90% for a 25-basis-point interest rate hike at the December 8–9 FOMC meeting. Higher Treasury yields increase the opportunity cost of holding non-yielding assets like bullion.
 - **US Dollar Strength:** Although a slight pullback in the US Dollar Index (DXY) toward the 104.00 mark gave gold room to breathe on Friday, elevated US yields continue to support the greenback, keeping dollar-denominated commodities under pressure.
